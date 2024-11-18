@@ -1,9 +1,11 @@
-// Function to load saved messages from local storage
+// Function to load all saved messages from local storage
 function loadMessages() {
+    // Get all messages from local storage
     const savedMessages = JSON.parse(localStorage.getItem('messages')) || [];
     const messagesContainer = document.getElementById('messages-container');
     messagesContainer.innerHTML = ''; // Clear the current messages
 
+    // Iterate over each saved message and display it
     savedMessages.forEach(message => {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message');
@@ -12,14 +14,15 @@ function loadMessages() {
     });
 }
 
-// Handle message form submission
+// Handle the message form submission
 document.getElementById('message-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault(); // Prevent the form from submitting
 
-    // Get values from the form
+    // Get the username and message from the form
     const username = document.getElementById('username').value;
     const messageText = document.getElementById('message').value;
 
+    // Validate the inputs
     if (username && messageText) {
         // Create a new message object
         const newMessage = { 
@@ -27,19 +30,19 @@ document.getElementById('message-form').addEventListener('submit', function(even
             text: messageText 
         };
 
-        // Get saved messages from local storage
+        // Get the existing messages from local storage
         const savedMessages = JSON.parse(localStorage.getItem('messages')) || [];
 
         // Add the new message to the saved messages array
         savedMessages.push(newMessage);
 
-        // Save the updated messages array back to local storage
+        // Save the updated messages back into local storage
         localStorage.setItem('messages', JSON.stringify(savedMessages));
 
-        // Reload the messages on the page
+        // Reload the messages to show the newly added one
         loadMessages();
 
-        // Clear the form inputs
+        // Clear the form fields
         document.getElementById('username').value = '';
         document.getElementById('message').value = '';
     } else {
@@ -47,5 +50,5 @@ document.getElementById('message-form').addEventListener('submit', function(even
     }
 });
 
-// Load messages when the page is loaded
+// Load all messages when the page is loaded
 window.onload = loadMessages;
